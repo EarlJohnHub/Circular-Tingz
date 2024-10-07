@@ -1,0 +1,62 @@
+#include <iostream>
+#include "node.h"
+#include <stdlib.h>
+using namespace std;
+
+class LinkFunctions {
+	private:
+		node *head;
+		int size;
+	public:
+		LinkFunctions() {
+			size = 0;
+			head = NULL;
+		}
+	
+	void addNode(int data) {
+		node* n = new node;
+		n->data = data;
+		
+		if(head == NULL) {
+			head = n;
+			n->next = n;
+		} else {
+			node* curr = head;
+			while(curr->next != head) {
+				curr = curr->next;
+			}
+			curr->next = n;
+			n->next = head;
+		}
+		size++;
+		 
+	}
+	
+	int removeNode(int num) {
+		node* curr = head;
+		int pos = 0;
+		do {
+			if(curr->next->data == num) {
+				node* toConnect = curr->next->next;
+				if(curr->next == head) {
+					head = toConnect;
+				}
+				delete curr->next;
+				curr->next = toConnect;
+				
+				size--;
+				return pos;
+			}
+			pos++;
+			curr = curr->next;
+		} while(curr != head);
+	}
+
+void printListFirst() { 
+        node *curr = head;
+        do {
+        	cout << curr->data << " ";
+        	curr = curr->next;
+		} while(curr != head);
+    }
+};   
